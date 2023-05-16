@@ -3,6 +3,8 @@ package web
 import (
 	"bytes"
 	"encoding/json"
+	"github.com/robertkrimen/otto"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -44,4 +46,24 @@ func defaultHeader(cookie string, req *http.Request) {
 	req.Header.Add("Sec-Fetch-Site", "same-origin")
 	req.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
 	req.Header.Add("X-Requested-With", "XMLHttpRequest")
+}
+
+func CallJs(filePath, method, s string) (string, error) {
+	//先读入文件内容
+	bt, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		return "", err
+	}
+
+	vm := otto.New()
+
+	_, err = vm.Run(string(bt))
+	if err != nil {
+		return "", err
+	}
+	value1, err := vm.Call(method, nil, s)
+	if err != nil {
+		return "", err
+	}
+	return value1.String(), nil
 }
