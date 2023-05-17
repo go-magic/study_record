@@ -7,6 +7,7 @@ import (
 	"github.com/robertkrimen/otto"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 // DefaultCookie 从浏览器中复制
@@ -31,7 +32,9 @@ func Post(url, cookie string, body interface{}) (*http.Request, error) {
 }
 
 func defaultHeader(cookie string, req *http.Request) {
-	req.Header.Add("cookie", cookie)
+	if cookie != "" {
+		req.Header.Add("cookie", cookie)
+	}
 	req.Header.Add("Authority", "match.yuanrenxue.cn")
 	req.Header.Add("Accept", "application/json, text/javascript, */*; q=0.01")
 	req.Header.Add("Accept-Encoding", "gzip, deflate, br")
@@ -71,4 +74,12 @@ func CallJs(filePath, method, s string) (string, error) {
 
 func Encode(str string) string {
 	return base64.StdEncoding.EncodeToString([]byte(str))
+}
+
+func ReplaceAll(info string) string {
+	info = strings.ReplaceAll(info, " ", "")
+	info = strings.ReplaceAll(info, "\r", "")
+	info = strings.ReplaceAll(info, "\n", "")
+	info = strings.ReplaceAll(info, "\t", "")
+	return info
 }
