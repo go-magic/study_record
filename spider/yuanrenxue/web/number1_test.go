@@ -37,6 +37,7 @@ func OneRequest(url string) (int, error) {
 	if err != nil {
 		return 0, err
 	}
+	defer res.Body.Close()
 	b, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return 0, err

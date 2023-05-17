@@ -2,6 +2,7 @@ package web
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"github.com/robertkrimen/otto"
 	"io/ioutil"
@@ -30,7 +31,7 @@ func Post(url, cookie string, body interface{}) (*http.Request, error) {
 }
 
 func defaultHeader(cookie string, req *http.Request) {
-	req.Header.Add("Cookie", cookie)
+	req.Header.Add("cookie", cookie)
 	req.Header.Add("Authority", "match.yuanrenxue.cn")
 	req.Header.Add("Accept", "application/json, text/javascript, */*; q=0.01")
 	req.Header.Add("Accept-Encoding", "gzip, deflate, br")
@@ -66,4 +67,8 @@ func CallJs(filePath, method, s string) (string, error) {
 		return "", err
 	}
 	return value1.String(), nil
+}
+
+func Encode(str string) string {
+	return base64.StdEncoding.EncodeToString([]byte(str))
 }
