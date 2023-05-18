@@ -52,7 +52,7 @@ func defaultHeader(cookie string, req *http.Request) {
 	req.Header.Add("X-Requested-With", "XMLHttpRequest")
 }
 
-func CallJs(filePath, method, s string) (string, error) {
+func CallJs(filePath, method string, s ...interface{}) (string, error) {
 	//先读入文件内容
 	bt, err := ioutil.ReadFile(filePath)
 	if err != nil {
@@ -65,7 +65,7 @@ func CallJs(filePath, method, s string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	value1, err := vm.Call(method, nil, s)
+	value1, err := vm.Call(method, nil, s...)
 	if err != nil {
 		return "", err
 	}
