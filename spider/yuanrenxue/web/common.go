@@ -52,6 +52,24 @@ func defaultHeader(cookie string, req *http.Request) {
 	req.Header.Add("X-Requested-With", "XMLHttpRequest")
 }
 
+func threeHeader(req *http.Request) {
+	req.Header.Add("host", "match.yuanrenxue.cn")
+	req.Header.Add("content-length", "0")
+	req.Header.Add("sec-ch-ua", `"Google Chrome";v="113", "Chromium";v="113", "Not-A.Brand";v="24"`)
+	req.Header.Add("sec-ch-ua-mobile", "?0")
+	req.Header.Add("user-agent", `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36`)
+	req.Header.Add("sec-ch-ua-platform", "Windows")
+	req.Header.Add("accept", "*/*")
+	req.Header.Add("origin", "https://match.yuanrenxue.cn")
+	req.Header.Add("sec-fetch-site", "same-origin")
+	req.Header.Add("sec-fetch-mode", "cors")
+	req.Header.Add("sec-fetch-dest", "empty")
+	req.Header.Add("referer", "https://match.yuanrenxue.cn/match/3")
+	req.Header.Add("accept-encoding", "gzip, deflate, br")
+	req.Header.Add("accept-language", "zh-CN,zh;q=0.9")
+	req.Header.Add("cookie", "sessionid=jrnp7ovvagujlxomaosyp8aqbvpo3y0i; Hm_lvt_c99546cf032aaa5a679230de9a95c7db=1684465310,1684482638,1684486875,1684718482; Hm_lvt_9bcbda9cbf86757998a2339a0437208e=1684201182,1684465313,1684487896,1684723383; Hm_lpvt_9bcbda9cbf86757998a2339a0437208e=1684723383; Hm_lpvt_c99546cf032aaa5a679230de9a95c7db=1684723624")
+}
+
 func CallJs(filePath, method string, s ...interface{}) (string, error) {
 	//先读入文件内容
 	bt, err := ioutil.ReadFile(filePath)
