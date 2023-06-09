@@ -31,10 +31,20 @@ func Post(url, cookie string, body interface{}) (*http.Request, error) {
 	return req, nil
 }
 
+type Header map[string][]string
+
+var ArrayHeaderKey = []string{}
+
+func (h Header) Add(req *http.Request, key string, value string) {
+	req.Header.Add(key, value)
+	ArrayHeaderKey = append(ArrayHeaderKey, key)
+}
+
 func defaultHeader(cookie string, req *http.Request) {
 	if cookie != "" {
 		req.Header.Add("cookie", cookie)
 	}
+	req.Header = http.Header(Header{})
 	req.Header.Add("Authority", "match.yuanrenxue.cn")
 	req.Header.Add("Accept", "application/json, text/javascript, */*; q=0.01")
 	req.Header.Add("Accept-Encoding", "gzip, deflate, br")
@@ -67,7 +77,7 @@ func threeHeader(req *http.Request) {
 	req.Header.Add("referer", "https://match.yuanrenxue.cn/match/3")
 	req.Header.Add("accept-encoding", "gzip, deflate, br")
 	req.Header.Add("accept-language", "zh-CN,zh;q=0.9")
-	req.Header.Add("cookie", "sessionid=jrnp7ovvagujlxomaosyp8aqbvpo3y0i; Hm_lvt_c99546cf032aaa5a679230de9a95c7db=1684465310,1684482638,1684486875,1684718482; Hm_lvt_9bcbda9cbf86757998a2339a0437208e=1684201182,1684465313,1684487896,1684723383; Hm_lpvt_9bcbda9cbf86757998a2339a0437208e=1684723383; Hm_lpvt_c99546cf032aaa5a679230de9a95c7db=1684723624")
+	req.Header.Add("cookie", "Hm_lvt_c99546cf032aaa5a679230de9a95c7db=1686217539; Hm_lvt_9bcbda9cbf86757998a2339a0437208e=1686217540; Hm_lpvt_9bcbda9cbf86757998a2339a0437208e=1686217540; sessionid=yniu4yq8b5pgpx9bmb8jjl11gdtgvxju; Hm_lpvt_c99546cf032aaa5a679230de9a95c7db=1686218343")
 }
 
 func CallJs(filePath, method string, s ...interface{}) (string, error) {

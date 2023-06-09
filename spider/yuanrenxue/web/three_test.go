@@ -61,7 +61,6 @@ func ThreePost(url string) error {
 	buf = bytes.NewBuffer(b)
 	req, _ := http.NewRequest(http.MethodPost, url, buf)
 	threeHeader(req)
-
 	client := http.Client{
 		Transport: http.DefaultTransport,
 	}
